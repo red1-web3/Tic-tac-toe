@@ -55,7 +55,7 @@ const Field = () => {
     setTimeout(() => {
       animate(
         `._winner`,
-        { scale: [1, 1.7, 1] },
+        { scale: [1, 1.3, 1] },
         { delay: stagger(0.1), duration: 0.5 }
       );
     }, 600);
