@@ -55,8 +55,8 @@ const Field = () => {
     setTimeout(() => {
       animate(
         `._winner`,
-        { scale: [1, 1.8, 1] },
-        { delay: stagger(0.08), duration: 0.4 }
+        { scale: [1, 1.7, 1] },
+        { delay: stagger(0.1), duration: 0.5 }
       );
     }, 600);
   }, [winner]);
@@ -66,7 +66,7 @@ const Field = () => {
       animate={{
         x: !isFieldNull && !winner ? [0, -10, 10, -10, 10, -10, 10, 0] : 0,
       }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
     >
       <div
         className={cxm(
@@ -89,7 +89,11 @@ const Field = () => {
           );
         })}
 
-        <div className={cxm(winner && "pointer-events-none opacity-30")}>
+        <div
+          className={cxm(
+            winner && "pointer-events-none opacity-30 duration-300"
+          )}
+        >
           <div className="absolute top-1/2 -translate-y-1/2 left-[150px] -translate-x-full h-[calc(100%-50px)] w-[14px] bg-borderColor shadowCustomForBorder"></div>
           <div className="absolute top-1/2 -translate-y-1/2 left-[293px] -translate-x-full h-[calc(100%-50px)] w-[14px] bg-borderColor shadowCustomForBorder"></div>
           <div className="absolute z-[1] left-1/2 -translate-x-1/2 top-[156px] -translate-y-full w-[calc(100%-40px)] h-[14px] bg-borderColor shadowCustomForBorder"></div>
