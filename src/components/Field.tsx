@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Box from "./Box";
 import { cxm } from "@/utils";
 import { motion, stagger, animate } from "framer-motion";
+import Borders from "./Borders";
 
 const answerIndex = [
   [0, 1, 2],
@@ -38,9 +39,6 @@ const Field = () => {
         fields[a] === fields[b] &&
         fields[b] === fields[c]
       ) {
-        // setTimeout(() => {
-        //   setFields(initialArray);
-        // }, 2000);
         return [a, b, c];
       }
     }
@@ -56,9 +54,9 @@ const Field = () => {
       animate(
         `._winner`,
         { scale: [1, 1.3, 1] },
-        { delay: stagger(0.1), duration: 0.5 }
+        { delay: stagger(0.05), duration: 0.3 }
       );
-    }, 600);
+    }, 300);
   }, [winner]);
 
   return (
@@ -66,11 +64,11 @@ const Field = () => {
       animate={{
         x: !isFieldNull && !winner ? [0, -10, 10, -10, 10, -10, 10, 0] : 0,
       }}
-      transition={{ duration: 0.5, ease: "easeInOut" }}
+      transition={{ duration: 0.4 }}
     >
       <div
         className={cxm(
-          "relative border-2 border-borderColor grid grid-cols-3 grid-rows-3 h-[430px] aspect-square bg-primary shadow-xl pb-5 pt-5"
+          "absolute inset-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-borderColor grid grid-cols-3 grid-rows-3 h-[430px] aspect-square bg-primary shadow-xl pb-5 pt-5 scale-[.7] sm:scale-100"
         )}
       >
         {fields.map((field, i) => {
@@ -89,16 +87,7 @@ const Field = () => {
           );
         })}
 
-        <div
-          className={cxm(
-            winner && "pointer-events-none opacity-30 duration-300"
-          )}
-        >
-          <div className="absolute top-1/2 -translate-y-1/2 left-[150px] -translate-x-full h-[calc(100%-50px)] w-[14px] bg-borderColor shadowCustomForBorder"></div>
-          <div className="absolute top-1/2 -translate-y-1/2 left-[293px] -translate-x-full h-[calc(100%-50px)] w-[14px] bg-borderColor shadowCustomForBorder"></div>
-          <div className="absolute z-[1] left-1/2 -translate-x-1/2 top-[156px] -translate-y-full w-[calc(100%-40px)] h-[14px] bg-borderColor shadowCustomForBorder"></div>
-          <div className="absolute z-[1] left-1/2 -translate-x-1/2 top-[287px] -translate-y-full w-[calc(100%-40px)] h-[14px] bg-borderColor shadowCustomForBorder"></div>
-        </div>
+        <Borders winner={!!winner?.length} />
       </div>
     </motion.div>
   );

@@ -13,15 +13,13 @@ const CircleAnimation = () => {
       pathLength: 1,
       pathOffset: 0,
       strokeDashoffset: 0,
-      //   fill: fill ? "black" : "none",
-      transition: fill ? { duration: 0.6 } : { duration: 0.6 },
+      transition: fill ? { duration: 0.3 } : { duration: 0.3 },
     });
     controls2.start({
       pathLength: 1,
       pathOffset: 0,
       strokeDashoffset: 0,
-      //   fill: fill ? "black" : "none",
-      transition: fill ? { duration: 0.6 } : { duration: 0.6 },
+      transition: fill ? { duration: 0.3 } : { duration: 0.3 },
     });
     controlsMiddle.start({
       opacity: 1,

@@ -10,8 +10,8 @@ const CrossIconAnimation = () => {
     controls.start({
       pathLength: 1,
       pathOffset: 0,
-      fill: fill ? "black" : "none",
-      transition: fill ? { duration: 0.6 } : { duration: 0.6 },
+      fill: fill ? "#18181b" : "none",
+      transition: fill ? { duration: 0.3 } : { duration: 0.3 },
     });
   }, [controls, fill]);
 
