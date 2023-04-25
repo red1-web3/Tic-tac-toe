@@ -15,8 +15,3 @@
     inset -2px -2px 3px rgba(0, 0, 0, 0.578),
     inset 0 0 8px 1px rgba(0, 0, 0, 0.338);
 }
-.shadowCustomForBorderShorter {
-  box-shadow: inset 2px 0 2px rgba(0, 0, 0, 0.155),
-    inset -2px 0px 3px rgba(0, 0, 0, 0.578),
-    inset 0 0 8px 1px rgba(0, 0, 0, 0.338);
-}

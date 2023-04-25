@@ -19,13 +19,14 @@ const Field = () => {
   const initialArray = Array(9).fill(null);
   const [fields, setFields] = useState(initialArray);
   const [isXTurn, setIsXTurn] = useState(false);
+  const [boardKey, setBoardKey] = useState(0);
 
   const handleClick = (i: number) => {
     const copyFileds = [...fields];
 
     if (copyFileds[i] !== null) return;
 
-    copyFileds[i] = isXTurn ? "X" : "O";
+    copyFileds[i] = isXTurn ? "O" : "X";
     setFields(copyFileds);
     setIsXTurn((prevTurn) => !prevTurn);
   };
@@ -39,7 +40,7 @@ const Field = () => {
         fields[a] === fields[b] &&
         fields[b] === fields[c]
       ) {
-        return [a, b, c];
+        return { list: [a, b, c], name: isXTurn };
       }
     }
   };
@@ -58,13 +59,14 @@ const Field = () => {
       );
     }, 300);
   }, [winner]);
-
+  console.log(winner, isXTurn);
   return (
     <motion.div
       animate={{
         x: !isFieldNull && !winner ? [0, -10, 10, -10, 10, -10, 10, 0] : 0,
       }}
       transition={{ duration: 0.4 }}
+      key={boardKey}
     >
       <div
         className={cxm(
@@ -77,7 +79,7 @@ const Field = () => {
               key={i}
               onClick={() => handleClick(i)}
               className={cxm(
-                winner && !winner?.includes(i)
+                winner?.list && !winner?.list?.includes(i)
                   ? "pointer-events-none opacity-30"
                   : "_winner"
               )}
@@ -86,9 +88,18 @@ const Field = () => {
             />
           );
         })}
-
-        <Borders winner={!!winner?.length} />
+        <Borders winner={!!winner?.list?.length} />
       </div>
+
+      <button
+        onClick={() => {
+          setFields(initialArray);
+          setBoardKey((prev) => prev + 1);
+        }}
+        className="select-none bg-borderColor/30 border shadow border-borderColor px-5 py-1.5 rounded-md text-[#4F3F35] font-bold text-xl absolute bottom-28 left-1/2 -translate-x-1/2"
+      >
+        Restart game
+      </button>
     </motion.div>
   );
 };
