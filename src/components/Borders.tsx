@@ -9,7 +9,11 @@ function Borders({ winner }: { winner: boolean }) {
   return (
     <>
       <div
-        className={cxm(winner && "pointer-events-none opacity-30 duration-200")}
+        className={cxm(
+          winner
+            ? "pointer-events-none opacity-30 duration-200"
+            : "pointer-events-auto opacity-80"
+        )}
       >
         <motion.div
           initial={{ height: 0, opacity: 0 }}

@@ -20,7 +20,7 @@ const Box = ({
     >
       <span className="flex items-center justify-center">
         <div className="hidden group-hover:block opacity-30">
-          {!field && <>{!isXTurn ? <CircleIcon /> : <CrossIcon />}</>}
+          {!field && <>{isXTurn ? <CircleIcon /> : <CrossIcon />}</>}
         </div>
 
         {field === "O" ? (
