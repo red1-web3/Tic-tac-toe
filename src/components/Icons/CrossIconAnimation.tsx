@@ -1,4 +1,3 @@
-import React from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -10,7 +9,7 @@ const CrossIconAnimation = () => {
     controls.start({
       pathLength: 1,
       pathOffset: 0,
-      fill: fill ? "#18181b" : "none",
+      fill: fill ? "#393646" : "none",
       transition: fill ? { duration: 0.3 } : { duration: 0.3 },
     });
   }, [controls, fill]);

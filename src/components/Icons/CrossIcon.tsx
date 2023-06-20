@@ -1,10 +1,8 @@
-import React from "react";
-
 const CrossIcon = () => {
   return (
     <svg
-      stroke="currentColor"
-      fill="currentColor"
+      stroke="#393646"
+      fill="#393646"
       strokeWidth={3}
       viewBox="0 0 512 512"
       height="2em"

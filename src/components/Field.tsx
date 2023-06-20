@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import Box from "./Box";
+import { useMode, useOWinCount, useXWinCount } from "@/contexts/jotai";
 import { cxm } from "@/utils";
-import { motion, stagger, animate } from "framer-motion";
+import { animate, motion, stagger } from "framer-motion";
+import { useEffect, useState } from "react";
 import Borders from "./Borders";
+import Box from "./Box";
 import RestartButton from "./RestartButton";
 
 const answerIndex = [
@@ -19,19 +20,14 @@ const answerIndex = [
 const Field = () => {
   const initialArray = Array(9).fill(null);
   const [fields, setFields] = useState(initialArray);
-  const [isXTurn, setIsXTurn] = useState(false);
+  const [isXTurn, setIsXTurn] = useState(true);
   const [boardKey, setBoardKey] = useState(0);
+  const [mode, setMode] = useMode();
 
-  const handleClick = (i: number) => {
-    const copyFileds = [...fields];
+  const [xWinCount, setXWinCount] = useXWinCount();
+  const [oWinCount, setOWinCount] = useOWinCount();
 
-    if (copyFileds[i] !== null) return;
-
-    copyFileds[i] = isXTurn ? "O" : "X";
-    setFields(copyFileds);
-    setIsXTurn((prevTurn) => !prevTurn);
-  };
-
+  console.log(xWinCount, oWinCount);
   const checkMatch = () => {
     for (let index = 0; index < answerIndex.length; index++) {
       const [a, b, c] = answerIndex[index];
@@ -41,13 +37,22 @@ const Field = () => {
         fields[a] === fields[b] &&
         fields[b] === fields[c]
       ) {
-        return { list: [a, b, c], name: isXTurn };
+        return { list: [a, b, c], name: fields[a] };
       }
     }
   };
 
   const winner = checkMatch();
   const isFieldNull = fields.includes(null);
+  console.log(winner);
+
+  // // Counter
+  // useEffect(() => {
+  //   if (winner?.name === "X") {
+  //     setXWinCount((prev) => prev + 1);
+  //   }
+  //   setOWinCount((prev) => prev + 1);
+  // }, [winner]);
 
   useEffect(() => {
     if (!winner) return;
@@ -60,9 +65,50 @@ const Field = () => {
       );
     }, 300);
   }, [winner]);
-  console.log(winner, isXTurn);
+
+  // If double player!
+  const handleClick = (i: number) => {
+    if (mode !== "multiple" && !isXTurn) return;
+
+    const copyFileds = [...fields];
+
+    if (copyFileds[i] !== null) return;
+
+    copyFileds[i] = isXTurn ? "X" : "O";
+    setFields(copyFileds);
+    setIsXTurn((prevTurn) => !prevTurn);
+  };
+
+  // If single player!
+  useEffect(() => {
+    if (isXTurn || mode !== "easy") return;
+    if (winner && mode === "easy") {
+      setIsXTurn(true);
+      return;
+    }
+
+    const copyFields = [...fields];
+
+    let emptyFields = copyFields.reduce((fields, element, index) => {
+      if (element === null || element === "") {
+        fields.push(index);
+      }
+      return fields;
+    }, []);
+
+    let randomIndex = Math.floor(Math.random() * emptyFields.length);
+
+    const t = setTimeout(() => {
+      copyFields[emptyFields[randomIndex]] = "O";
+      setIsXTurn(true);
+      setFields(copyFields);
+    }, 400);
+
+    return () => clearTimeout(t);
+  }, [isXTurn]);
+
   return (
-    <>
+    <div>
       <motion.div
         animate={{
           x: !isFieldNull && !winner ? [0, -10, 10, -10, 10, -10, 10, 0] : 0,
@@ -72,7 +118,7 @@ const Field = () => {
       >
         <div
           className={cxm(
-            "absolute inset-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-borderColor grid grid-cols-3 grid-rows-3 h-[430px] aspect-square bg-primary shadow-xl pb-5 pt-5 scale-[.7] sm:scale-100"
+            "border-2 border-borderColor grid grid-cols-3 grid-rows-3 h-[430px] aspect-square bg-primary shadow-md pb-5 pt-5 scale-[.7] sm:scale-100"
           )}
         >
           {fields.map((field, i) => {
@@ -100,7 +146,7 @@ const Field = () => {
           setBoardKey((prev) => prev + 1);
         }}
       />
-    </>
+    </div>
   );
 };
 
