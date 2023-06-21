@@ -34,7 +34,7 @@ const CircleAnimation = () => {
       xmlns="http://www.w3.org/2000/svg"
       initial={{ stroke: "#ccc" }}
       animate={{ stroke: ["#ccc", "#000", "#ccc"] }}
-      transition={{ repeat: Infinity, duration: 1.5 }}
+      transition={{ duration: 1.5 }}
     >
       <motion.path
         d="M 128,128 m -100,0 a 100,100 0 1,0 200,0 a 100,100 0 1,0 -200,0"

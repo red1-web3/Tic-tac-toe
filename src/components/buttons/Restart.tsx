@@ -1,6 +1,6 @@
 import { ComponentProps } from "react";
 
-const RestartButton = (props: ComponentProps<"button">) => {
+const Restart = (props: ComponentProps<"button">) => {
   return (
     <div className="mx-auto w-fit mt-5">
       <button
@@ -13,4 +13,4 @@ const RestartButton = (props: ComponentProps<"button">) => {
   );
 };
 
-export default RestartButton;
+export default Restart;

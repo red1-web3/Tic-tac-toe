@@ -1,11 +1,11 @@
 import { Mode } from "@/config/models/Mode";
 import { atom, useAtom } from "jotai";
 
-const mode = atom<Mode>("easy");
+const mode = atom<Mode>("multiple");
 export const useMode = () => useAtom(mode);
 
 const xWinCount = atom(0);
 export const useXWinCount = () => useAtom(xWinCount);
 
 const oWinCount = atom(0);
-export const useOWinCount = () => useAtom(xWinCount);
+export const useOWinCount = () => useAtom(oWinCount);
