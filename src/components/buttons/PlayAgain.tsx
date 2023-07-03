@@ -1,4 +1,5 @@
 import { cxm } from "@/utils";
+import { motion } from "framer-motion";
 import { ComponentProps } from "react";
 
 const PlayAgain = ({
@@ -7,9 +8,11 @@ const PlayAgain = ({
   ...rest
 }: { name?: string } & ComponentProps<"button">) => {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transition: { delay: 0.9, duration: 0.4 } }}
       className={cxm(
-        "absolute inset-0 bg-black/40 flex justify-center flex-col gap-y-5 items-center"
+        "absolute inset-0 bg-black/70 flex justify-center flex-col gap-y-5 items-center"
       )}
     >
       <div className="text-5xl font-semibold text-primary">
@@ -24,7 +27,7 @@ const PlayAgain = ({
       >
         Play again?
       </button>
-    </div>
+    </motion.div>
   );
 };
 

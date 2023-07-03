@@ -1,5 +1,12 @@
 import PlayAgain from "@/components/buttons/PlayAgain";
-import { useMode, useOWinCount, useXWinCount } from "@/contexts/jotai";
+import {
+  useBoardKey,
+  useFields,
+  useIsXTurn,
+  useMode,
+  useOWinCount,
+  useXWinCount,
+} from "@/contexts/jotai";
 import { cxm } from "@/utils";
 import { animate, motion, stagger } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -16,6 +23,7 @@ interface MatchResult {
   name: string;
 }
 
+export const initialArray = Array(9).fill(null);
 const answerIndex = [
   [0, 1, 2],
   [3, 4, 5],
@@ -28,11 +36,11 @@ const answerIndex = [
 ];
 
 const Field = () => {
-  const initialArray = Array(9).fill(null);
-  const [fields, setFields] = useState(initialArray);
-  const [boardKey, setBoardKey] = useState(0);
-  const [isXTurn, setIsXTurn] = useState(true);
+  const [boardKey, setBoardKey] = useBoardKey();
+  const [isXTurn, setIsXTurn] = useIsXTurn();
+
   const [mode, setMode] = useMode();
+  const [fields, setFields] = useFields();
 
   // Counter
   const [xWinCount, setXWinCount] = useXWinCount();
@@ -86,7 +94,7 @@ const Field = () => {
 
   // If double player!
   const handleClick = (i: number) => {
-    if (mode !== "multiple" && !isXTurn) return;
+    if (mode !== "multiple" && isXTurn === false) return;
 
     const copyFileds = [...fields];
 
@@ -100,11 +108,10 @@ const Field = () => {
   // If single player!
   useEffect(() => {
     if (isXTurn || mode !== "easy") return;
-    if (winner && mode === "easy") {
+    if (winner) {
       setIsXTurn(true);
       return;
     }
-
     const copyFields = [...fields];
 
     let emptyFields = copyFields.reduce((fields, element, index) => {
@@ -123,7 +130,7 @@ const Field = () => {
     }, 400);
 
     return () => clearTimeout(t);
-  }, [isXTurn]);
+  }, [isXTurn, winner]);
 
   return (
     <div>
@@ -131,7 +138,7 @@ const Field = () => {
         animate={{
           x: !isFieldNull && !winner ? [0, -10, 10, -10, 10, -10, 10, 0] : 0,
         }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
         key={boardKey}
       >
         <div
@@ -167,14 +174,25 @@ const Field = () => {
         </div>
       </motion.div>
 
-      <Restart
-        onClick={() => {
-          setFields(initialArray);
-          setBoardKey((p) => p + 1);
-          setXWinCount(0);
-          setOWinCount(0);
-        }}
-      />
+      <div className="flex items-center gap-x-4 mt-3">
+        <Restart
+          onClick={() => {
+            setFields(initialArray);
+            setBoardKey((p) => p + 1);
+          }}
+          text="Restart board"
+        />
+        <Restart
+          onClick={() => {
+            setFields(initialArray);
+            setBoardKey((p) => p + 1);
+            setXWinCount(0);
+            setOWinCount(0);
+            setWinner(undefined);
+          }}
+          text="Restart game"
+        />
+      </div>
     </div>
   );
 };

@@ -1,13 +1,16 @@
 import { ComponentProps } from "react";
 
-const Restart = (props: ComponentProps<"button">) => {
+const Restart = ({
+  text,
+  ...props
+}: { text: string } & ComponentProps<"button">) => {
   return (
-    <div className="mx-auto w-fit mt-5">
+    <div className="mx-auto w-full">
       <button
         {...props}
-        className="select-none bg-borderColor/30 border shadow border-borderColor px-5 py-1.5 rounded-md text-[#4F3F35] font-bold text-xl"
+        className="select-none w-full bg-borderColor/30 border shadow border-borderColor px-5 py-1.5 rounded-md text-[#4F3F35] font-bold text-xl"
       >
-        Restart game
+        {text}
       </button>
     </div>
   );
