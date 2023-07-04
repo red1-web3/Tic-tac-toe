@@ -180,7 +180,7 @@ const Field = () => {
             setFields(initialArray);
             setBoardKey((p) => p + 1);
           }}
-          text="Restart board"
+          text="Reset board"
         />
         <Restart
           onClick={() => {
