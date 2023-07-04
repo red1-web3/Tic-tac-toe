@@ -174,7 +174,7 @@ const Field = () => {
         </div>
       </motion.div>
 
-      <div className="flex items-center gap-x-4 mt-3">
+      <div className="flex items-center gap-x-4 -mt-10 md:mt-3 max-sm:px-7">
         <Restart
           onClick={() => {
             setFields(initialArray);

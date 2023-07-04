@@ -8,7 +8,7 @@ const Header = () => {
   const [oWinCount, setOWinCount] = useOWinCount();
 
   return (
-    <header className="mb-3">
+    <header className="mb-3 max-sm:translate-y-[52px] max-sm:px-7">
       <div className="flex items-center gap-x-3">
         <div className="select-none bg-borderColor/30 border shadow border-borderColor px-5 h-11 cursor-pointer text-[#4F3F35] font-bold text-lg w-full flex justify-between items-center">
           <CrossIcon />

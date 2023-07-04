@@ -14,7 +14,7 @@ const Mode = () => {
     <div className="relative">
       <button
         onClick={() => setIsModalOpen((prev) => !prev)}
-        className="select-none w-[140px] bg-borderColor/30 border shadow border-borderColor pl-4 pr-2 py-1.5 text-[#4F3F35] font-bold text-xl capitalize flex items-center justify-between"
+        className="select-none w-[140px] bg-borderColor/30 border shadow border-borderColor pl-4 pr-2 py-1.5 text-[#4F3F35] font-bold text-base sm:text-xl capitalize flex items-center justify-between"
       >
         {mode} <ChevronDown />
       </button>
@@ -32,12 +32,12 @@ function Modal({ setOpen }: { setOpen: Dispatch<SetStateAction<boolean>> }) {
   const [boardKey, setBoardKey] = useBoardKey();
 
   return (
-    <div className="absolute bottom-0 right-0 bg-borderColor/30 py-1 translate-y-[calc(100%+4px)] w-full">
+    <div className="absolute bottom-0 right-0 z-[999] bg-borderColor sm:bg-borderColor/30 py-1 translate-y-[calc(100%+4px)] w-full">
       <ul className="text-start">
         {modes.map((label, i) => (
           <li
             key={i}
-            className="py-1 px-3 hover:bg-borderColor/[0.35] duration-200 text-base font-semibold text-[#4F3F35] capitalize cursor-pointer"
+            className="py-1 px-3 hover:bg-borderColor/[0.35] duration-200 text-base font-semibold sm:text-[#4F3F35] text-[#3b2d25] capitalize cursor-pointer"
             onClick={() => {
               setMode(label as any);
               setFields(initialArray);
