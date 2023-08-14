@@ -26,10 +26,10 @@ const Mode = () => {
 export default Mode;
 
 function Modal({ setOpen }: { setOpen: Dispatch<SetStateAction<boolean>> }) {
-  const [mode, setMode] = useMode();
-  const [fields, setFields] = useFields();
-  const [isXTurn, setIsXTurn] = useIsXTurn();
-  const [boardKey, setBoardKey] = useBoardKey();
+  const [, setMode] = useMode();
+  const [, setFields] = useFields();
+  const [, setIsXTurn] = useIsXTurn();
+  const [, setBoardKey] = useBoardKey();
 
   return (
     <div className="absolute bottom-0 right-0 z-[999] bg-borderColor sm:bg-borderColor/30 py-1 translate-y-[calc(100%+4px)] w-full">
