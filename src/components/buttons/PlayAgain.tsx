@@ -16,7 +16,7 @@ const PlayAgain = ({
       )}
     >
       <div className="text-5xl font-semibold text-primary">
-        {name ? `${name} is Win!` : "Draw!"}{" "}
+        {name ? `${name} Won!😤` : "Draw!"}{" "}
       </div>
       <button
         {...rest}

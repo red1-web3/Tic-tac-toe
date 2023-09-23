@@ -9,7 +9,7 @@ import {
 } from "@/contexts/jotai";
 import { cxm } from "@/utils";
 import { animate, motion, stagger } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Borders from "./Borders";
 import Box from "./Box";
 import Restart from "./buttons/Restart";
@@ -36,6 +36,11 @@ const answerIndex = [
 ];
 
 const Field = () => {
+  // Refs
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioRefWin = useRef<HTMLAudioElement | null>(null);
+  const audioRefDraw = useRef<HTMLAudioElement | null>(null);
+
   const [boardKey, setBoardKey] = useBoardKey();
   const [isXTurn, setIsXTurn] = useIsXTurn();
 
@@ -43,8 +48,8 @@ const Field = () => {
   const [fields, setFields] = useFields();
 
   // Counter
-  const [xWinCount, setXWinCount] = useXWinCount();
-  const [oWinCount, setOWinCount] = useOWinCount();
+  const [, setXWinCount] = useXWinCount();
+  const [, setOWinCount] = useOWinCount();
 
   const [winner, setWinner] = useState<MatchResult | undefined>();
 
@@ -79,10 +84,10 @@ const Field = () => {
     }
   }, [winner]);
 
-  // Winner show animation
+  // If Win
   useEffect(() => {
     if (!winner) return;
-
+    audioRefWin.current?.play();
     setTimeout(() => {
       animate(
         `._winner`,
@@ -92,8 +97,19 @@ const Field = () => {
     }, 300);
   }, [winner]);
 
+  // If Draw
+  useEffect(() => {
+    if (!isFieldNull && !winner) {
+      audioRefDraw.current?.play();
+    }
+
+    return () => {};
+  }, [isFieldNull, winner]);
+
   // If double player!
   const handleClick = (i: number) => {
+    audioRef.current?.play();
+
     if (mode !== "multiple" && isXTurn === false) return;
 
     const copyFileds = [...fields];
@@ -162,6 +178,9 @@ const Field = () => {
             );
           })}
           <Borders winner={!!winner?.list?.length} />
+          <audio ref={audioRef} src={"/put.mp3"}></audio>
+          <audio ref={audioRefWin} src={"/win.mp3"}></audio>
+          <audio ref={audioRefDraw} src={"/draw.mp3"}></audio>
           {winner || !isFieldNull ? (
             <PlayAgain
               name={winner?.name}
